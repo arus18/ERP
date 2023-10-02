@@ -4,6 +4,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="supermarket.store.service.Service"%>
 <%@ page import="supermarket.store.model.Expense"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%
 	HttpSession sess = request.getSession(false);
 	if (sess.getAttribute("name") == null) {

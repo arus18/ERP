@@ -5,6 +5,7 @@
 <%@ page import="supermarket.order.model.Order"%>
 <%@ page import="supermarket.product.model.Product"%>
 <%@ page import="supermarket.distributor.model.Distributor"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%
 	HttpSession sess = request.getSession(false);
 	if (sess.getAttribute("name") == null) {
@@ -64,7 +65,7 @@
 								ArrayList<Product> products = supermarket.product.service.Service.selectProducts();
 								for (Product p : products) {
 								%>
-								<option value=<%=p.getProductID() + "_" + p.getName()%>><%=p.getName()%></option>
+								<option value=<%=p.getProductID() + "_" + Encode.forHtml(p.getName())%>><%=Encode.forHtml(p.getName())%></option>
 								<%
 								}
 								%>
@@ -78,7 +79,7 @@
 								for (Distributor d : distributors) {
 								%>
 								<option
-									value=<%=d.getDistributorName() + "_" + d.getDistributorID()%>><%=d.getDistributorName()%></option>
+									value=<%=Encode.forHtml(d.getDistributorName()) + "_" + d.getDistributorID()%>><%=Encode.forHtml(d.getDistributorName())%></option>
 								<%
 								}
 								%>
@@ -93,7 +94,7 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-primary">Save changes</button>
+					<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Save changes</button>
 				</div>
 				</form>
 			</div>
@@ -133,7 +134,7 @@
 						<input type="hidden" value="" name="orderID">
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary">Save
+						<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Save
 							changes</button>
 					</div>
 				</form>
@@ -240,10 +241,10 @@
 							data-target="#exampleModalCenter"
 							data-order-id=<%=o.getOrderID()%> data-order-quantity=<%=o.getQuantity()%> data-order-status=<%=o.getStatus()%> class="text-dark"><%=o.getProductName()%></a></td>
 						<td><%=o.getQuantity()%></td>
-						<td><%=o.getStatus()%></td>
-						<td><%=o.getDistributorName()%></td>
+						<td><%=Encode.forHtml(o.getStatus())%></td>
+						<td><%=Encode.forHtml(o.getDistributorName())%></td>
 						<td><form method="POST" action="DeleteOrder">
-								<button type="submit" class="btn btn-primary">Delete</button>
+								<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Delete</button>
 								<input type="hidden" value=<%=o.getOrderID()%> name="orderID">
 							</form></td>
 					</tr>
@@ -260,10 +261,10 @@
 							data-target="#exampleModalCenter"
 							data-order-id=<%=o.getOrderID()%> data-order-quantity=<%=o.getQuantity()%> data-order-status=<%=o.getStatus()%> class="text-dark"><%=o.getProductName()%></a></td>
 						<td><%=o.getQuantity()%></td>
-						<td><%=o.getStatus()%></td>
-						<td><%=o.getDistributorName()%></td>
+						<td><%=Encode.forHtml(o.getStatus())%></td>
+						<td><%=Encode.forHtml(o.getDistributorName())%></td>
 						<td><form method="POST" action="DeleteOrder">
-								<button type="submit" class="btn btn-primary">Delete</button>
+								<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Delete</button>
 								<input type="hidden" value=<%=o.getOrderID()%> name="orderID">
 							</form></td>
 					</tr>
@@ -294,6 +295,7 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
 		integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
 		crossorigin="anonymous"></script>
+
 
 	<script type="text/javascript">
 		$(document).ready(function() {

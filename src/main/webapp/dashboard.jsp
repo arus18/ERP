@@ -3,6 +3,7 @@
 <%@ page import="supermarket.billing.model.InvoiceItem"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.math.BigDecimal"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%
 HttpSession sess = request.getSession(false);
 if (sess.getAttribute("name") == null) {

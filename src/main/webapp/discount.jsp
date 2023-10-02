@@ -3,6 +3,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="supermarket.discount.service.Service"%>
 <%@ page import="supermarket.discount.model.Discount"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%
 	HttpSession sess = request.getSession(false);
 	if (sess.getAttribute("name") == null) {
@@ -72,7 +73,7 @@
 						<input type="hidden" value="" name="prodID">
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary">Save
+						<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Save
 							changes</button>
 					</div>
 				</form>
@@ -162,11 +163,11 @@
 							data-product-id=<%=d.getProductID()%>
 							data-product-discount=<%=d.getDiscount()%>
 							data-product-quantity=<%=d.getQuantity()%> class="text-dark"><%=d.getProductID()%></a></td>
-						<td><%=d.getProductName()%></td>
+						<td><%= org.owasp.encoder.Encode.forHtml(d.getProductName()) %></td>
 						<td><%=d.getQuantity()%></td>
 						<td><%=d.getDiscount()%></td>
 						<td><form method="POST" action="DeleteDiscount">
-								<button type="submit" class="btn btn-primary">Delete</button>
+								<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Delete</button>
 								<input type="hidden" value=<%=d.getProductID()%>
 									name="productID">
 							</form></td>
@@ -186,11 +187,11 @@
 							data-product-id=<%=d.getProductID()%>
 							data-product-discount=<%=d.getDiscount()%>
 							data-product-quantity=<%=d.getQuantity()%> class="text-dark"><%=d.getProductID()%></a></td>
-						<td><%=d.getProductName()%></td>
+						<td><%= org.owasp.encoder.Encode.forHtml(d.getProductName()) %></td>
 						<td><%=d.getQuantity()%></td>
 						<td><%=d.getDiscount()%></td>
 						<td><form method="POST" action="DeleteDiscount">
-								<button type="submit" class="btn btn-primary">Delete</button>
+								<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Delete</button>
 								<input type="hidden" value=<%=d.getProductID()%>
 									name="productID">
 							</form></td>
@@ -222,6 +223,7 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
 		integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
 		crossorigin="anonymous"></script>
+
 
 	<script type="text/javascript">
 		$(document).ready(function() {

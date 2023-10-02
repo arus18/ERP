@@ -4,6 +4,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="supermarket.employee.service.Service"%>
 <%@ page import="supermarket.employee.model.Employee"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%
 	HttpSession sess = request.getSession(false);
 	if (sess.getAttribute("name") == null) {
@@ -55,7 +56,7 @@
                   </div>
                   <div class="form-group">
                     <label for="formGroupExampleInput2">Password</label>
-                    <input type="password" class="form-control" id="formGroupExampleInput2" placeholder="Password" name="password" required>
+                    <input type="password" class="form-control" id="formGroupExampleInput2" placeholder="Password" name="password" required pattern="(?=.*\d)(?=.*[\W_]).{7,}" title="Minimum of 7 characters. Should have at least one special character and one number.">
                   </div>
                   <div class="form-group">
                     <label for="formGroupExampleInput2">Phone number</label>
@@ -96,7 +97,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+          <button type="submit" class="btn btn-primary" class="ajax-submit-btn">Save changes</button>
         </div>
         </form>
       </div>
@@ -170,7 +171,7 @@
         <div class="modal-footer">
           <input type="hidden" value="" name="empID">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+          <button type="submit" class="btn btn-primary" class="ajax-submit-btn">Save changes</button>
         </div>
         </form>    
       </div>
@@ -258,25 +259,25 @@
 						<td><a href="#exampleModalCenter" data-toggle="modal"
 							data-target="#exampleModalCenter"
 							data-emp-id=<%=e.getEmployeeID()%>
-							data-emp-email=<%=e.getEmail()%>
-							data-emp-password=<%=e.getPassword()%>
-							data-emp-phonenumber=<%=e.getPhoneNumber()%>
-							data-emp-dob=<%=e.getDOB()%>
-							data-emp-address=<%=e.getAddress()%>
-							data-emp-name=<%=e.getName()%>
-							data-emp-role=<%=e.getRole()%>
-							data-emp-designation=<%=e.getDesignation()%>
-							data-emp-salary=<%=e.getSalary()%>
-							 class="text-dark"><%=e.getName()%></a></td>
-						<td><%=e.getEmail()%></td>
-						<td><%=e.getPhoneNumber()%></td>
-						<td><%=e.getDOB()%></td>
-						<td><%=e.getAddress()%></td>
-						<td><%=e.getRole()%></td>
-						<td><%=e.getDesignation()%></td>
-						<td><%=e.getSalary()%></td>
-						<td><form method="POST" action="DeleteEmployee">
-								<button type="submit" class="btn btn-primary">Delete</button>
+                                       data-emp-email=<%= Encode.forHtml(e.getEmail()) %>
+                               data-emp-password=<%= Encode.forHtml(e.getPassword()) %>
+                                       data-emp-phonenumber=<%= Encode.forHtml(e.getPhoneNumber()) %>
+                               data-emp-dob=<%= e.getDOB() %>
+                                       data-emp-address=<%= Encode.forHtml(e.getAddress()) %>
+                               data-emp-name=<%= Encode.forHtml(e.getName()) %>
+                                       data-emp-role=<%= Encode.forHtml(e.getRole()) %>
+                               data-emp-designation=<%= Encode.forHtml(e.getDesignation()) %>
+                                       data-emp-salary=<%=e.getSalary()%>
+							 class="text-dark"><%=Encode.forHtml(e.getName())%></a></td>
+                        <td><%= Encode.forHtml(e.getEmail()) %></td>
+                        <td><%= Encode.forHtml(e.getPhoneNumber()) %></td>
+                        <td><%= e.getDOB() %></td>
+                        <td><%= Encode.forHtml(e.getAddress()) %></td>
+                        <td><%= Encode.forHtml(e.getRole()) %></td>
+                        <td><%= Encode.forHtml(e.getDesignation()) %></td>
+                        <td><%= e.getSalary() %></td>
+                        <td><form method="POST" action="DeleteEmployee">
+								<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Delete</button>
 								<input type="hidden" value=<%=e.getEmployeeID()%>
 									name="empID">
 							</form></td>
@@ -293,26 +294,26 @@
 						<th scope="row"><%=count%></th>
 						<td><a href="#exampleModalCenter" data-toggle="modal"
 							data-target="#exampleModalCenter"
-							data-emp-id=<%=e.getEmployeeID()%>
-							data-emp-email=<%=e.getEmail()%>
-							data-emp-password=<%=e.getPassword()%>
-							data-emp-phonenumber=<%=e.getPhoneNumber()%>
-							data-emp-dob=<%=e.getDOB()%>
-							data-emp-address=<%=e.getAddress()%>
-							data-emp-name=<%=e.getName()%>
-							data-emp-role=<%=e.getRole()%>
-							data-emp-designation=<%=e.getDesignation()%>
-							data-emp-salary=<%=e.getSalary()%>
-							 class="text-dark"><%=e.getName()%></a></td>
-						<td><%=e.getEmail()%></td>
-						<td><%=e.getPhoneNumber()%></td>
-						<td><%=e.getDOB()%></td>
-						<td><%=e.getAddress()%></td>
-						<td><%=e.getRole()%></td>
-						<td><%=e.getDesignation()%></td>
-						<td><%=e.getSalary()%></td>
+                               data-emp-id=<%=e.getEmployeeID()%>
+                                       data-emp-email=<%= Encode.forHtml(e.getEmail()) %>
+                               data-emp-password=<%= Encode.forHtml(e.getPassword()) %>
+                                       data-emp-phonenumber=<%= Encode.forHtml(e.getPhoneNumber()) %>
+                               data-emp-dob=<%= e.getDOB() %>
+                                       data-emp-address=<%= Encode.forHtml(e.getAddress()) %>
+                               data-emp-name=<%= Encode.forHtml(e.getName()) %>
+                                       data-emp-role=<%= Encode.forHtml(e.getRole()) %>
+                               data-emp-designation=<%= Encode.forHtml(e.getDesignation()) %>
+                                       data-emp-salary=<%=e.getSalary()%>
+                               class="text-dark"><%=Encode.forHtml(e.getName())%></a></td>
+                        <td><%= Encode.forHtml(e.getEmail()) %></td>
+                        <td><%= Encode.forHtml(e.getPhoneNumber()) %></td>
+                        <td><%= e.getDOB() %></td>
+                        <td><%= Encode.forHtml(e.getAddress()) %></td>
+                        <td><%= Encode.forHtml(e.getRole()) %></td>
+                        <td><%= Encode.forHtml(e.getDesignation()) %></td>
+                        <td><%= e.getSalary() %></td>
 						<td><form method="POST" action="DeleteEmployee">
-								<button type="submit" class="btn btn-primary">Delete</button>
+								<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Delete</button>
 								<input type="hidden" value=<%=e.getEmployeeID()%>
 									name="empID">
 							</form></td>
@@ -335,6 +336,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
   <!-- Bootstrap JS -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
 
   <script type="text/javascript">
     $(document).ready(function() {

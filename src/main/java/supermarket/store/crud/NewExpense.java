@@ -30,12 +30,26 @@ public class NewExpense extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		BigDecimal amount = new BigDecimal(request.getParameter("amount"));
-		String recipentName = request.getParameter("recipentName");
-		String paymentFor = request.getParameter("paymentFor");
-        Service.newExpense(amount, recipentName, paymentFor);
-        response.sendRedirect("store.jsp");
+		// Retrieve the CSRF token from the request
+		String requestToken = request.getParameter("csrfToken");
+
+// Retrieve the CSRF token from the session
+		String sessionToken = (String) request.getSession().getAttribute("csrfToken");
+
+		if (requestToken != null && requestToken.equals(sessionToken)) {
+			// CSRF token is valid; process the request
+			// TODO Auto-generated method stub
+			BigDecimal amount = new BigDecimal(request.getParameter("amount"));
+			String recipentName = request.getParameter("recipentName");
+			String paymentFor = request.getParameter("paymentFor");
+			Service.newExpense(amount, recipentName, paymentFor);
+			response.sendRedirect("store.jsp");
+		} else {
+			// Invalid CSRF token; handle the error (e.g., return an error page or response)
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN); // You can choose an appropriate status code
+		}
+
+
 	}
 
 }

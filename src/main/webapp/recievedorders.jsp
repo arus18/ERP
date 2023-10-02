@@ -3,6 +3,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="supermarket.purchase.service.Service"%>
 <%@ page import="supermarket.order.model.Order"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%
 	HttpSession sess = request.getSession(false);
 	if (sess.getAttribute("name") == null) {
@@ -67,7 +68,7 @@
 						<input type="hidden" value="" name="distName">
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary">Save
+						<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Save
 							changes</button>
 					</div>
 				</form>
@@ -143,15 +144,15 @@
 					<tr>
 						<th scope="row"><%=1%></th>
 						<td><%=o.getOrderID()%></td>
-						<td><%=o.getProductName()%></td>
+						<td><%=Encode.forHtml(o.getProductName())%></td>
 						<td><%=o.getQuantity()%></td>
-						<td><%=o.getStatus()%></td>
-						<td><%=o.getDistributorName()%></td>
+						<td><%=Encode.forHtml(o.getStatus())%></td>
+						<td><%=Encode.forHtml(o.getDistributorName())%></td>
 						<td><a href="#exampleModalCenter" data-toggle="modal"
 							data-target="#exampleModalCenter"
 							data-order-id=<%=o.getOrderID()%>
 							data-dist-id=<%=o.getDistributorID()%> data-dist-name
-							<%=o.getDistributorName()%> class="text-dark">Purchase</a></td>
+							<%=Encode.forHtml(o.getDistributorName())%> class="text-dark">Purchase</a></td>
 					</tr>
 					<%
 					} else {
@@ -162,15 +163,15 @@
 					<tr>
 						<th scope="row"><%=count%></th>
 						<td><%=o.getOrderID()%></td>
-						<td><%=o.getProductName()%></td>
+						<td><%=Encode.forHtml(o.getProductName())%></td>
 						<td><%=o.getQuantity()%></td>
-						<td><%=o.getStatus()%></td>
-						<td><%=o.getDistributorName()%></td>
+						<td><%=Encode.forHtml(o.getStatus())%></td>
+						<td><%=Encode.forHtml(o.getDistributorName())%></td>
 						<td><a href="#exampleModalCenter" data-toggle="modal"
 							data-target="#exampleModalCenter"
 							data-order-id=<%=o.getOrderID()%>
 							data-dist-id=<%=o.getDistributorID()%> data-dist-name
-							<%=o.getDistributorName()%> class="text-dark">Purchase</a></td>
+							<%=Encode.forHtml(o.getDistributorName())%> class="text-dark">Purchase</a></td>
 					</tr>
 					<%
 					count++;

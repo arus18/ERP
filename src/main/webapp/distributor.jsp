@@ -5,7 +5,8 @@
 <%@ page import="supermarket.distributor.model.Distributor"%>
 <%@ page
 	import="supermarket.distributor.model.DistributorWithOrderCount"%>
-	<%
+<%@ page import="org.owasp.encoder.Encode" %>
+<%
 	HttpSession sess = request.getSession(false);
 	if (sess.getAttribute("name") == null) {
 		response.sendRedirect("login.jsp");
@@ -83,7 +84,7 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary">Save
+						<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Save
 							changes</button>
 					</div>
 				</form>
@@ -135,7 +136,7 @@
 						<input type="hidden" value="" name="distID">
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary">Save
+						<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Save
 							changes</button>
 					</div>
 				</form>
@@ -251,15 +252,15 @@
 						<td><a href="#exampleModalCenter" data-toggle="modal"
 							data-target="#exampleModalCenter"
 							data-dist-id=<%=d.getDistributorID()%>
-							data-dist-name=<%=d.getDistributorName()%>
-							data-dist-address=<%=d.getAddress()%>
-							data-dist-phonenumber=<%=d.getPhoneNumber()%>
-							data-dist-email=<%=d.getEmail()%> class="text-dark"><%=d.getDistributorName()%></a></td>
-						<td><%=d.getAddress()%></td>
-						<td><%=d.getPhoneNumber()%></td>
-						<td><%=d.getEmail()%></td>
+									   data-dist-name=<%= Encode.forHtml(d.getDistributorName()) %>
+							   data-dist-address=<%= Encode.forHtml(d.getAddress()) %>
+									   data-dist-phonenumber=<%= Encode.forHtml(d.getPhoneNumber()) %>
+							   data-dist-email=<%= Encode.forHtml(d.getEmail()) %> class="text-dark"><%= Encode.forHtml(d.getDistributorName()) %></a></td>
+						<td><%= Encode.forHtml(d.getAddress()) %></td>
+						<td><%= Encode.forHtml(d.getPhoneNumber()) %></td>
+						<td><%= Encode.forHtml(d.getEmail()) %></td>
 						<td><form method="POST" action="DeleteDistributor">
-								<button type="submit" class="btn btn-primary">Delete</button>
+								<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Delete</button>
 								<input type="hidden" value=<%=d.getDistributorID()%>
 									name="distID">
 							</form></td>
@@ -276,16 +277,16 @@
 						<th scope="row"><%=count%></th>
 						<td><a href="#exampleModalCenter" data-toggle="modal"
 							data-target="#exampleModalCenter"
-							data-dist-id=<%=d.getDistributorID()%>
-							data-dist-name=<%=d.getDistributorName()%>
-							data-dist-address=<%=d.getAddress()%>
-							data-dist-phonenumber=<%=d.getPhoneNumber()%>
-							data-dist-email=<%=d.getEmail()%> class="text-dark"><%=d.getDistributorName()%></a></td>
-						<td><%=d.getAddress()%></td>
-						<td><%=d.getPhoneNumber()%></td>
-						<td><%=d.getEmail()%></td>
+							   data-dist-id=<%= d.getDistributorID() %>
+									   data-dist-name=<%= Encode.forHtml(d.getDistributorName()) %>
+							   data-dist-address=<%= Encode.forHtml(d.getAddress()) %>
+									   data-dist-phonenumber=<%= Encode.forHtml(d.getPhoneNumber()) %>
+							   data-dist-email=<%= Encode.forHtml(d.getEmail()) %> class="text-dark"><%= Encode.forHtml(d.getDistributorName()) %></a></td>
+						<td><%= Encode.forHtml(d.getAddress()) %></td>
+						<td><%= Encode.forHtml(d.getPhoneNumber()) %></td>
+						<td><%= Encode.forHtml(d.getEmail()) %></td>
 						<td><form method="POST" action="DeleteDistributor">
-								<button type="submit" class="btn btn-primary">Delete</button>
+								<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Delete</button>
 								<input type="hidden" value=<%=d.getDistributorID()%>
 									name="distID">
 							</form></td>
@@ -317,6 +318,7 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
 		integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
 		crossorigin="anonymous"></script>
+
 
 	<script type="text/javascript">
 		$(document).ready(function() {

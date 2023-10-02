@@ -3,6 +3,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="supermarket.stock.service.Service"%>
 <%@ page import="supermarket.stock.model.Stock"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%
 	HttpSession sess = request.getSession(false);
 	if (sess.getAttribute("name") == null) {
@@ -127,7 +128,7 @@
 					<tr>
 						<th scope="row"><%=count%></th>
 						<td><%=s.getProductID()%></td>
-						<td><%=s.getProductName()%></td>
+						<td><%=Encode.forHtml(s.getProductName())%></td>
 						<td><%=s.getQuantity()%></td>
 						<td><form method="POST" action="DeleteStock">
 								<button type="submit" class="btn btn-primary">Delete</button>
@@ -146,7 +147,7 @@
 					<tr>
 						<th scope="row"><%=count%></th>
 						<td><%=s.getProductID()%></td>
-						<td><%=s.getProductName()%></td>
+						<td><%=Encode.forHtml(s.getProductName())%></td>
 						<td><%=s.getQuantity()%></td>
 						<td><form method="POST" action="DeleteStock">
 								<button type="submit" class="btn btn-primary">Delete</button>

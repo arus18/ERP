@@ -4,6 +4,7 @@
 <%@ page import="supermarket.purchase.service.Service"%>
 <%@ page import="supermarket.purchase.model.Purchase"%>
 <%@ page import="java.math.BigDecimal"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%
 	HttpSession sess = request.getSession(false);
 	if (sess.getAttribute("name") == null) {
@@ -171,12 +172,12 @@
 					%>
 					<tr>
 						<th scope="row"><%=1%></th>
-						<td><%=p.getDistributorName()%></td>
+						<td><%=Encode.forHtml(p.getDistributorName())%></td>
 						<td><%=p.getOrderID()%></td>
 						<td><%=p.getAmount()%></td>
 						<td><%=p.getDateTime()%></td>
 						<td><form method="POST" action="DeletePurchase">
-								<button type="submit" class="btn btn-primary">Delete</button>
+								<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Delete</button>
 								<input type="hidden" value=<%=p.getPurchaseID()%>
 									name="purchaseID">
 							</form></td>
@@ -189,12 +190,12 @@
 					%>
 					<tr>
 						<th scope="row"><%=count%></th>
-						<td><%=p.getDistributorName()%></td>
+						<td><%=Encode.forHtml(p.getDistributorName())%></td>
 						<td><%=p.getOrderID()%></td>
 						<td><%=p.getAmount()%></td>
 						<td><%=p.getDateTime()%></td>
 						<td><form method="POST" action="DeletePurchase">
-								<button type="submit" class="btn btn-primary">Delete</button>
+								<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Delete</button>
 								<input type="hidden" value=<%=p.getPurchaseID()%>
 									name="purchaseID">
 							</form></td>
@@ -209,12 +210,12 @@
 					%>
 					<tr>
 						<th scope="row"><%=count%></th>
-						<td><%=p.getDistributorName()%></td>
+						<td><%=Encode.forHtml(p.getDistributorName())%></td>
 						<td><%=p.getOrderID()%></td>
 						<td><%=p.getAmount()%></td>
 						<td><%=p.getDateTime()%></td>
 						<td><form method="POST" action="DeletePurchase">
-								<button type="submit" class="btn btn-primary">Delete</button>
+								<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Delete</button>
 								<input type="hidden" value=<%=p.getPurchaseID()%>
 									name="purchaseID">
 							</form></td>
@@ -238,6 +239,7 @@
 	<script type="text/javascript" src="js/purchaseChartByDate.js"></script>
     <script type="text/javascript" src="js/purchasesLastSevenDays.js"></script>
 
+	<script type="text/javascript" src="js/csrf-token.js"></script>
 
 	<script type="text/javascript">
 		$(document).ready(function() {

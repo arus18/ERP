@@ -221,7 +221,7 @@
 	<script type="text/javascript" src="js/salesChart.js"></script>
 	<script type="text/javascript" src="js/salesLastSevenDays.js"></script>
 
-	<script type="text/javascript">​
+	<script type="text/javascript">
     $(document).ready(function() {
       $('#sidebarCollapse').on('click', function() {
         $('#sidebar').toggleClass('active');

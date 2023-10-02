@@ -4,6 +4,7 @@
 <%@ page import="supermarket.product.service.Service"%>
 <%@ page import="supermarket.product.model.Product"%>
 <%@ page import="java.util.*"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%
 HttpSession sess = request.getSession(false);
 if (sess.getAttribute("name") == null) {
@@ -102,7 +103,7 @@ if (sess.getAttribute("name") == null) {
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Close</button>
+							data-dismiss="modal" class="ajax-submit-btn">Close</button>
 						<input type="submit" value="Save" class="btn btn-primary">
 					</div>
 				</form>
@@ -169,7 +170,7 @@ if (sess.getAttribute("name") == null) {
 					<div class="modal-footer">
 						<input type="hidden" value="" name="productID">
 						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Close</button>
+							data-dismiss="modal" class="ajax-submit-btn">Close</button>
 						<input type="submit" value="Save" class="btn btn-primary">
 					</div>
 				</form>
@@ -286,16 +287,16 @@ if (sess.getAttribute("name") == null) {
 											data-product-barcode=<%=barcode%>
 											data-product-price=<%=p.getPrice()%>
 											data-product-desc=<%=p.getDescription()%>
-											data-product-category=<%=p.getCategory()%> class="text-dark"><%=p.getName()%></a>
+											data-product-category=<%=Encode.forHtml(p.getCategory())%> class="text-dark"><%=Encode.forHtml(p.getName())%></a>
 									</h5>
 									<p class="mb-2"><%=p.getPrice()%></p>
-									<p class="mb-2"><%=p.getDescription()%></p>
+									<p class="mb-2"><%=Encode.forHtml(p.getDescription())%></p>
 									<p class="mb-2"><%=p.getProductID()%></p>
 									<div class="container">
 										<div class="row">
 											<div class="col-sm">
 												<form method="POST" action="DeleteProduct">
-													<button type="submit" class="btn btn-primary">Delete</button>
+													<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Delete</button>
 													<input type="hidden" value=<%=p.getProductID()%>
 														name="productID">
 												</form>
@@ -333,17 +334,17 @@ if (sess.getAttribute("name") == null) {
 											data-product-name=<%=p.getName().replaceAll("\\s", "")%>
 											data-product-barcode=<%=barcode%>
 											data-product-price=<%=p.getPrice()%>
-											data-product-desc=<%=p.getDescription()%>
-											data-product-category=<%=p.getCategory()%> class="text-dark"><%=p.getName()%></a>
+											data-product-desc=<%=Encode.forHtml(p.getDescription())%>
+											data-product-category=<%=Encode.forHtml(p.getCategory())%> class="text-dark"><%=Encode.forHtml(p.getName())%></a>
 									</h5>
 									<p class="mb-2"><%=p.getPrice()%></p>
-									<p class="mb-2"><%=p.getDescription()%></p>
+									<p class="mb-2"><%=Encode.forHtml(p.getDescription())%></p>
 									<p class="mb-2"><%=p.getProductID()%></p>
 									<div class="container">
 										<div class="row">
 											<div class="col-sm">
 												<form method="POST" action="DeleteProduct">
-													<button type="submit" class="btn btn-primary">Delete</button>
+													<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Delete</button>
 													<input type="hidden" value=<%=p.getProductID()%>
 														name="productID">
 												</form>
@@ -387,6 +388,7 @@ if (sess.getAttribute("name") == null) {
 		integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
 		crossorigin="anonymous"></script>
 
+	<script type="text/javascript" src="js/csrf-token.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#sidebarCollapse').on('click', function() {

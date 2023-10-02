@@ -4,6 +4,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="supermarket.store.service.Service"%>
 <%@ page import="supermarket.store.model.Expense"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%
 	HttpSession sess = request.getSession(false);
 	if (sess.getAttribute("name") == null) {
@@ -88,7 +89,7 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary">Save
+						<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Save
 							changes</button>
 					</div>
 				</form>
@@ -129,7 +130,7 @@
 						<input type="hidden" value="" name="expenseID">
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary">Save
+						<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Save
 							changes</button>
 					</div>
 				</form>
@@ -220,10 +221,10 @@
 							data-target="#exampleModalCenter"
 							data-expense-id=<%=e.getExpenseID()%> class="text-dark"><%=e.getRecipentName()%></a></td>
 						<td><%=e.getAmount()%></td>
-						<td><%=e.getPaymentFor()%></td>
+						<td><%=Encode.forHtml(e.getPaymentFor())%></td>
 						<td><%=e.getDate()%></td>
 						<td><form method="POST" action="DeleteExpense">
-								<button type="submit" class="btn btn-primary">Delete</button>
+								<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Delete</button>
 								<input type="hidden" value=<%=e.getExpenseID()%>
 									name="expenseID">
 							</form></td>
@@ -242,10 +243,10 @@
 							data-target="#exampleModalCenter"
 							data-expense-id=<%=e.getExpenseID()%> class="text-dark"><%=e.getRecipentName()%></a></td>
 						<td><%=e.getAmount()%></td>
-						<td><%=e.getPaymentFor()%></td>
+						<td><%=Encode.forHtml(e.getPaymentFor())%></td>
 						<td><%=e.getDate()%></td>
 						<td><form method="POST" action="DeleteExpense">
-								<button type="submit" class="btn btn-primary">Delete</button>
+								<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Delete</button>
 								<input type="hidden" value=<%=e.getExpenseID()%>
 									name="expenseID">
 							</form></td>
@@ -273,6 +274,7 @@
 		integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
 		crossorigin="anonymous"></script>
 
+	<script type="text/javascript" src="js/csrf-token.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#sidebarCollapse').on('click', function() {

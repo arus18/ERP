@@ -3,6 +3,7 @@
 <%@ page import="supermarket.billing.service.Service"%>
 <%@ page import="supermarket.billing.model.InvoiceItem"%>
 <%@ page import="java.util.*"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%
 	HttpSession sess = request.getSession(false);
 	if (sess.getAttribute("name") == null) {
@@ -139,7 +140,7 @@
 					%>
 					<tr>
 						<th scope="col"><%=count%></th>
-						<th scope="col"><%=item.getName()%></th>
+						<th scope="col"><%= org.owasp.encoder.Encode.forHtml(item.getName()) %></th>
 						<th scope="col"><%=item.getQuantity()%></th>
 						<th scope="col"><%=item.getPrice()%></th>
 						<th scope="col"></th>
@@ -157,7 +158,7 @@
 
 	<script type="text/javascript"
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script type="text/javascript" src="js/billing.js"></script>
+
 
 	<script type="text/javascript">
 		$(document).ready(function() {

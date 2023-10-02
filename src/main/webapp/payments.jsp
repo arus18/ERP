@@ -4,6 +4,7 @@
 <%@ page import="supermarket.payment.service.Service"%>
 <%@ page import="supermarket.employee.model.Employee"%>
 <%@ page import="supermarket.payment.model.Payment"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%
 	HttpSession sess = request.getSession(false);
 	if (sess.getAttribute("name") == null) {
@@ -64,7 +65,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+          <button type="submit" class="btn btn-primary" class="ajax-submit-btn">Save changes</button>
         </div>
         </form>>
       </div>
@@ -97,7 +98,7 @@
         <div class="modal-footer">
           <input type="hidden" value="" name="eID">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+          <button type="submit" class="btn btn-primary" class="ajax-submit-btn">Save changes</button>
         </div>
         </form>    
       </div>
@@ -182,7 +183,7 @@
 							data-target="#exampleModalCenter"
 							data-employee-id=<%=p.getEmpID()%>
 							 class="text-dark"><%=p.getEmpID()%></a></td>
-						<td><%=p.getName()%></td>
+						<td><%=Encode.forHtml(p.getName())%></td>
 						<td><%=p.getPaid()%></td>
 						<td><%=p.getDate()%></td>
 					</tr>
@@ -200,7 +201,7 @@
 							data-target="#exampleModalCenter"
 							data-employee-id=<%=p.getEmpID()%>
 							 class="text-dark"><%=p.getEmpID()%></a></td>
-						<td><%=p.getName()%></td>
+                        <td><%=Encode.forHtml(p.getName())%></td>
 						<td><%=p.getPaid()%></td>
 						<td><%=p.getDate()%></td>
 					</tr>
@@ -227,6 +228,7 @@
 		integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
 		crossorigin="anonymous"></script>
 
+  <script type="text/javascript" src="js/csrf-token.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {
       $('#sidebarCollapse').on('click', function() {

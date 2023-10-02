@@ -3,6 +3,7 @@
 	<%@ page import="supermarket.product.service.Service"%>
 <%@ page import="supermarket.product.model.Product"%>
 <%@ page import="java.util.*"%>
+<%@ page import="org.owasp.encoder.Encode" %>
 <%
 	HttpSession sess = request.getSession(false);
 	if (sess.getAttribute("name") == null) {
@@ -147,11 +148,11 @@
 								<div class="p-4">
 									<h5>
 										<a href="#exampleModalCenter" data-toggle="modal"
-											data-target="#exampleModalCenter"
-											data-product-id=<%=p.getProductID()%> data-product-name=<%=p.getName()%> data-product-img=<%="data:image/jpg;base64,"+b64img%> class="text-dark"><%=p.getName()%></a>
+										   data-target="#exampleModalCenter"
+										   data-product-id=<%=p.getProductID()%> data-product-name=<%=Encode.forHtml(p.getName())%> data-product-img=<%="data:image/jpg;base64,"+b64img%> class="text-dark"><%=Encode.forHtml(p.getName())%></a>
 									</h5>
 									<p class="small text-muted mb-0"><%=p.getPrice()%></p>
-									<p class="small text-muted mb-0"><%=p.getDescription()%></p>
+									<p class="small text-muted mb-0"><%=Encode.forHtml(p.getDescription())%></p>
 									<div class="d-flex align-items-center justify-content-between">
 									</div>
 								</div>
@@ -174,10 +175,10 @@
 									<h5>
 										<a href="#exampleModalCenter" data-toggle="modal"
 											data-target="#exampleModalCenter"
-											data-product-id=<%=p.getProductID()%> data-product-name=<%=p.getName()%> data-product-img=<%="data:image/jpg;base64,"+b64img%> class="text-dark"><%=p.getName()%></a>
+											data-product-id=<%=p.getProductID()%> data-product-name=<%=Encode.forHtml(p.getName())%> data-product-img=<%="data:image/jpg;base64,"+b64img%> class="text-dark"><%=Encode.forHtml(p.getName())%></a>
 									</h5>
 									<p class="small text-muted mb-0"><%=p.getPrice()%></p>
-									<p class="small text-muted mb-0"><%=p.getDescription()%></p>
+									<p class="small text-muted mb-0"><%=Encode.forHtml(p.getDescription())%></p>
 									<div class="d-flex align-items-center justify-content-between">
 									</div>
 								</div>

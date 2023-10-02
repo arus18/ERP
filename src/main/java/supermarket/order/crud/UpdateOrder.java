@@ -26,6 +26,20 @@ public class UpdateOrder extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Retrieve the CSRF token from the request
+		String requestToken = request.getParameter("csrfToken");
+
+// Retrieve the CSRF token from the session
+		String sessionToken = (String) request.getSession().getAttribute("csrfToken");
+
+		if (requestToken != null && requestToken.equals(sessionToken)) {
+			// CSRF token is valid; process the request
+			// ...
+		} else {
+			// Invalid CSRF token; handle the error (e.g., return an error page or response)
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN); // You can choose an appropriate status code
+		}
+
 		int orderID = Integer.parseInt(request.getParameter("orderID"));
 		int qunatity = Integer.parseInt(request.getParameter("quantity"));
 		String status = request.getParameter("status");
