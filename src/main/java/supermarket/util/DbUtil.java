@@ -7,6 +7,7 @@ public class DbUtil {
 	private static String jdbcURL = "jdbc:mysql://localhost:3306/supermarket?useSSL=false";
 	private static String jdbcUsername = "root";
 	private static String jdbcPassword = "password";
+
 	public static Connection getConnection() {
 		Connection connection = null;
 		try {
