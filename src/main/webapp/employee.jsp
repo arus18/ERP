@@ -129,7 +129,7 @@
                   </div>
                   <div class="form-group">
                     <label for="formGroupExampleInput2">Password</label>
-                    <input type="password" class="form-control" id="formGroupExampleInput2" placeholder="Password" name="password">
+                    <input type="password" class="form-control" id="formGroupExampleInput2" placeholder="Password" name="password" required pattern="(?=.*\d)(?=.*[\W_]).{7,}" title="Minimum of 7 characters. Should have at least one special character and one number.">
                   </div>
                   <div class="form-group">
                     <label for="formGroupExampleInput2">Phone number</label>
