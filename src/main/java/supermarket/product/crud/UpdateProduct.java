@@ -41,32 +41,45 @@ public class UpdateProduct extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String productName = request.getParameter("name");
-		int productID = Integer.parseInt(request.getParameter("productID"));
-		String price =  request.getParameter("price");
-		String description = request.getParameter("description");
-		String category = request.getParameter("category");
-		InputStream inputStream = null;
-        Part filePart = request.getPart("image");
-        if(!(productName == null || productName.trim().isEmpty())) {
-        	ProductUpdate.updateName(productID, productName);
-        }
-        if(!(price == null || price.trim().isEmpty())) {
-        	ProductUpdate.updatePrice(productID, new BigDecimal(price));
-        }
-        if(!(description == null || description.trim().isEmpty())) {
-        	ProductUpdate.updateDescription(productID, description);
-        }
-        if(!(category == null || category.trim().isEmpty())) {
-        	ProductUpdate.updateCategory(productID, category);
-        }
-        if (filePart != null) {
-            inputStream = filePart.getInputStream();
-            if(filePart.getSize() != 0) {
-            	ProductUpdate.updateImage(productID,inputStream);
-            }
-        }
-        response.sendRedirect("product.jsp");
+		// Retrieve the CSRF token from the request
+		String requestToken = request.getParameter("csrfToken");
+
+// Retrieve the CSRF token from the session
+		String sessionToken = (String) request.getSession().getAttribute("csrfToken");
+
+		if (requestToken != null && requestToken.equals(sessionToken)) {
+			// CSRF token is valid; process the request
+			String productName = request.getParameter("name");
+			int productID = Integer.parseInt(request.getParameter("productID"));
+			String price =  request.getParameter("price");
+			String description = request.getParameter("description");
+			String category = request.getParameter("category");
+			InputStream inputStream = null;
+			Part filePart = request.getPart("image");
+			if(!(productName == null || productName.trim().isEmpty())) {
+				ProductUpdate.updateName(productID, productName);
+			}
+			if(!(price == null || price.trim().isEmpty())) {
+				ProductUpdate.updatePrice(productID, new BigDecimal(price));
+			}
+			if(!(description == null || description.trim().isEmpty())) {
+				ProductUpdate.updateDescription(productID, description);
+			}
+			if(!(category == null || category.trim().isEmpty())) {
+				ProductUpdate.updateCategory(productID, category);
+			}
+			if (filePart != null) {
+				inputStream = filePart.getInputStream();
+				if(filePart.getSize() != 0) {
+					ProductUpdate.updateImage(productID,inputStream);
+				}
+			}
+			response.sendRedirect("product.jsp");
+		} else {
+			// Invalid CSRF token; handle the error (e.g., return an error page or response)
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN); // You can choose an appropriate status code
+		}
+
 	}
 
 }

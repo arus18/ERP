@@ -32,16 +32,29 @@ public class NewProduct extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String productName = request.getParameter("name");
-		BigDecimal price =  new BigDecimal(request.getParameter("price"));
-		String description = request.getParameter("description");
-		String category = request.getParameter("category");
-		InputStream inputStream = null;
-        Part filePart = request.getPart("image");
-        if (filePart != null) {
-            inputStream = filePart.getInputStream();
+        // Retrieve the CSRF token from the request
+        String requestToken = request.getParameter("csrfToken");
+
+// Retrieve the CSRF token from the session
+        String sessionToken = (String) request.getSession().getAttribute("csrfToken");
+
+        if (requestToken != null && requestToken.equals(sessionToken)) {
+            // CSRF token is valid; process the request
+            String productName = request.getParameter("name");
+            BigDecimal price =  new BigDecimal(request.getParameter("price"));
+            String description = request.getParameter("description");
+            String category = request.getParameter("category");
+            InputStream inputStream = null;
+            Part filePart = request.getPart("image");
+            if (filePart != null) {
+                inputStream = filePart.getInputStream();
+            }
+            Service.newProduct(productName, price, description, inputStream, category);
+            response.sendRedirect("product.jsp");
+        } else {
+            // Invalid CSRF token; handle the error (e.g., return an error page or response)
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN); // You can choose an appropriate status code
         }
-        Service.newProduct(productName, price, description, inputStream, category);
-        response.sendRedirect("product.jsp");
+
 }
 }
