@@ -3,6 +3,7 @@ package supermarket.employee.function;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -25,7 +26,12 @@ public class Login extends HttpServlet {
 		String enteredPassword = request.getParameter("password");
 
 		// Retrieve the user's lockout information from the session
-		HttpSession session = request.getSession();
+		HttpSession oldSession = request.getSession(false);
+		if (oldSession != null) {
+			oldSession.invalidate();
+		}
+		//generate a new session
+		HttpSession session = request.getSession(true);
 		Integer loginAttempts = (Integer) session.getAttribute("loginAttempts");
 		Long lastLoginTime = (Long) session.getAttribute("lastLoginTime");
 
@@ -73,7 +79,8 @@ public class Login extends HttpServlet {
 				Cookie sessionCookie = new Cookie("sessionId", session.getId());
 				sessionCookie.setPath("/");
 				response.addCookie(sessionCookie);
-				response.sendRedirect("home.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("home.jsp");
+				dispatcher.forward(request, response);
 			} else {
 				// Failed login attempt
 				System.out.println("failed-----");
