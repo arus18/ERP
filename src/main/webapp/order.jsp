@@ -93,7 +93,7 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-primary">Save changes</button>
+					<button type="submit" class="btn btn-primary" class="ajax-submit-btn">Save changes</button>
 				</div>
 				</form>
 			</div>
@@ -294,6 +294,8 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
 		integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
 		crossorigin="anonymous"></script>
+
+	<script type="text/javascript" src="js/csrf-token.js"></script>
 
 	<script type="text/javascript">
 		$(document).ready(function() {

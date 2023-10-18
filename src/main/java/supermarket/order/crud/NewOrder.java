@@ -28,8 +28,9 @@ public class NewOrder extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Retrieve the CSRF token from the request
-		String requestToken = request.getParameter("csrfToken");
+		String requestToken = request.getParameter("csrf");
 
+		System.out.println("csrf-token"+requestToken);
 // Retrieve the CSRF token from the session
 		String sessionToken = (String) request.getSession().getAttribute("csrfToken");
 

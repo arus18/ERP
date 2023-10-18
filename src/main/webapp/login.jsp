@@ -37,6 +37,7 @@
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <!--===============================================================================================-->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
 <%
@@ -68,11 +69,17 @@
                 <div class="container-login100-form-btn m-t-32">
                     <button type="submit" class="login100-form-btn">Login</button>
                 </div>
-                <div id="g_id_onload"
-                     data-client_id="534119121437-m1vrr26elv8lpvk3tijmqugn5ekt7q0m.apps.googleusercontent.com"
-                     data-callback="handleCredentialResponse">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-5 mx-auto m-t-5">
+                            <div id="g_id_onload"
+                                 data-client_id="534119121437-m1vrr26elv8lpvk3tijmqugn5ekt7q0m.apps.googleusercontent.com"
+                                 data-callback="handleCredentialResponse">
+                            </div>
+                            <div class="g_id_signin" data-type="standard"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="g_id_signin" data-type="standard"></div>
             </form>
         </div>
     </div>
@@ -96,7 +103,7 @@
 <!--===============================================================================================-->
 <script src="js/main.js"></script>
 
-<script src="https://accounts.google.com/gsi/client" async defer></script>
+
 
 <script>
     function handleCredentialResponse(response) {
@@ -105,9 +112,7 @@
             var credential = response.credential;
             var user = credential.profile;
 
-            console.log('ID: ' + user.id);
-            console.log('Name: ' + user.name);
-            console.log('Email: ' + user.email);
+            console.log('ID: ' + credential.toString());
 
             // You can access more user details by inspecting the 'user' object
             console.log('User Details:', user);

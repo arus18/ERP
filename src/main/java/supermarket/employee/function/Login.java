@@ -24,7 +24,6 @@ public class Login extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		int empID = Integer.parseInt(request.getParameter("empID"));
 		String enteredPassword = request.getParameter("password");
-
 		// Retrieve the user's lockout information from the session
 		HttpSession oldSession = request.getSession(false);
 		if (oldSession != null) {
@@ -64,7 +63,8 @@ public class Login extends HttpServlet {
 			out.println("</script>");
 		} else {
 			String storedHashedPassword = emp.getPassword();
-
+			System.out.println("stored------------"+storedHashedPassword);
+			System.out.println("hashed------------"+ BCrypt.hashpw(enteredPassword,BCrypt.gensalt()));
 			if (BCrypt.checkpw(enteredPassword, storedHashedPassword)) {
 				// Successful login
 				System.out.println("success-----");
